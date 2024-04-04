@@ -1,4 +1,5 @@
 
+import { LogoutSession } from "../../firebase/Auth/Authentication";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -79,10 +80,17 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+
+                {/* Logout */}
+                <DropdownItem href="#pablo" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  LogoutSession();
+                }}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
+
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

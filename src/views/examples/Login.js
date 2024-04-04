@@ -1,8 +1,10 @@
 
+import { LoginSession } from "../../firebase/Auth/Authentication";
+import React from "react";
 import {
   Button,
   Card,
-  CardHeader,
+  // CardHeader,
   CardBody,
   FormGroup,
   Form,
@@ -15,6 +17,29 @@ import {
 } from "reactstrap";
 
 const Login = () => {
+  const [user, setUser] = React.useState({
+    email: "",
+    password: ""
+})
+
+    // for email and password changes
+    const handleInputChange = e => {
+      const { name, value } = e.target;
+      setUser({
+        ...user,
+        [name]: value
+      });
+  };
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+
+    LoginSession(user)
+    .then(e=>console.log("goodshist"))
+    .catch(e=> alert(e))
+};
+
   return (
     <>
       <Col lg="5" md="7">
@@ -24,6 +49,8 @@ const Login = () => {
             <div className="text-center text-muted mb-4">
               <h3>Sign In</h3>
             </div>
+
+            {/* Email */}
             <Form role="form">
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
@@ -33,12 +60,17 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Username"
-                    type="text"
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    value={user.username}
+                    onChange={handleInputChange}
                     autoComplete="new-email"
                   />
                 </InputGroup>
               </FormGroup>
+
+              {/* Password */}
               <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -48,12 +80,15 @@ const Login = () => {
                   </InputGroupAddon>
                   <Input
                     placeholder="Password"
+                    name="password"
                     type="password"
+                    value={user.password}
+                    onChange={handleInputChange}
                     autoComplete="new-password"
                   />
                 </InputGroup>
               </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
+              {/* <div className="custom-control custom-control-alternative custom-checkbox">
                 <input
                   className="custom-control-input"
                   id=" customCheckLogin"
@@ -65,9 +100,11 @@ const Login = () => {
                 >
                   <span className="text-muted">Remember me</span>
                 </label>
-              </div>
+              </div> */}
+
+              {/* Login */}
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button className="my-4" color="primary" type="button" onClick={handleLogin}>
                   Sign in
                 </Button>
               </div>
