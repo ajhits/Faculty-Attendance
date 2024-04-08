@@ -9,7 +9,7 @@ import {
     signOut,
     createUserWithEmailAndPassword,
     deleteUser,
-} from "@firebase/auth";
+} from "firebase/auth";
 
 import { auth } from "../Configuration";
 import { createUserAccount } from "../Firestore";

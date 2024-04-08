@@ -1,9 +1,29 @@
 {
   "name": "hellofriend",
   "version": "1.2.3",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "6.4.0",
+    "bootstrap": "4.6.2",
+    "chart.js": "2.9.4",
+    "classnames": "2.3.2",
+    "firebase": "^10.10.0",
+    "moment": "2.29.4",
+    "nouislider": "15.4.0",
+    "react": ">=16.0.0",
+    "react-chartjs-2": "2.11.2",
+    "react-copy-to-clipboard": "5.1.0",
+    "react-datetime": "3.2.0",
+    "react-dom": ">=16.0.0",
+    "react-icons": "^4.11.0",
+    "react-router-dom": "6.11.1",
+    "react-scripts": "5.0.1",
+    "reactstrap": "8.10.0",
+    "sass": "1.62.1"
+  },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts --openssl-legacy-provider  build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
@@ -26,23 +46,7 @@
       "last 1 safari version"
     ]
   },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "6.4.0",
-    "bootstrap": "4.6.2",
-    "chart.js": "2.9.4",
-    "classnames": "2.3.2",
-    "firebase": "^10.10.0",
-    "moment": "2.29.4",
-    "nouislider": "15.4.0",
-    "react": ">=16.0.0",
-    "react-chartjs-2": "2.11.2",
-    "react-copy-to-clipboard": "5.1.0",
-    "react-datetime": "3.2.0",
-    "react-dom": ">=16.0.0",
-    "react-icons": "^4.11.0",
-    "react-router-dom": "6.11.1",
-    "react-scripts": "5.0.1",
-    "reactstrap": "8.10.0",
-    "sass": "1.62.1"
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

@@ -1,4 +1,13 @@
-import { doc, setDoc, getDoc,updateDoc, deleteDoc, addDoc, collection, getDocs  } from "firebase/firestore";
+import { 
+  doc, 
+  setDoc, 
+  getDoc,
+  updateDoc, 
+  deleteDoc, 
+  addDoc, 
+  collection, 
+  getDocs  
+} from "firebase/firestore";
 import { firestore } from './Configuration'
 import { LogoutSession } from "./Auth/Authentication";
 
