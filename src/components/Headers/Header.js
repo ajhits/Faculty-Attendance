@@ -121,9 +121,9 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Access Denied
+                          Temperature Today
                         </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">250</span>
+                        <span className="h2 font-weight-bold mb-0">36^</span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -144,7 +144,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Vacant
+                          Registered Users
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">2</span>
                       </div>

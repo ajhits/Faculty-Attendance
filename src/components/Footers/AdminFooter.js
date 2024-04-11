@@ -16,7 +16,7 @@ const Footer = () => {
               rel="noopener noreferrer"
        
             >
-              BIAG YARN
+              AIOTKNOWSME
             </a>
           </div>
         </Col>

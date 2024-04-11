@@ -9,7 +9,7 @@ const UserHeader = () => {
         style={{
           minHeight: "600px",
           backgroundImage:
-            "url(" + require("../../assets/img/theme/house.jpg") + ")",
+            "url(" + require("../../assets/img/gate.jpeg") + ")",
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}

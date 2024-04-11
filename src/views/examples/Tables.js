@@ -1,5 +1,3 @@
-// ...
-
 import {
   Badge,
   Button,
@@ -22,6 +20,12 @@ import {
 import Header from "components/Headers/Header.js";
 
 const Tables = () => {
+  // Function to handle delete action
+  const handleDelete = (userId) => {
+    // Perform delete action based on userId
+    console.log(`Deleting user with ID: ${userId}`);
+  };
+
   return (
     <>
       <Header />
@@ -32,20 +36,31 @@ const Tables = () => {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
-                <h3 className="mb-0">Card tables</h3>
+                <h3 className="mb-0">Users</h3>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">User ID</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Familiarity</th>
-                    <th scope="col">Tag Status</th>
-                    <th scope="col" />
+                    <th scope="col">ID Number</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Actions</th> {/* Added column for actions */}
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Add your table rows here */}
+                  {/* Sample table row */}
+                  <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>1234567890</td>
+                    <td>Manager</td>
+                    <td>
+                      {/* Delete button */}
+                      <Button color="danger" onClick={() => handleDelete(1)}>Delete</Button>
+                    </td>
+                  </tr>
+                  {/* Add more table rows here */}
                 </tbody>
               </Table>
               <CardFooter className="py-4">
@@ -59,15 +74,6 @@ const Tables = () => {
                 </nav>
               </CardFooter>
             </Card>
-            {/* Button to initiate */}
-            <Card className="mt-4 shadow text-center">
-            <CardBody>
-             <Button color="info">Initiate RFID</Button>
-               <p className="mt-2">
-                Click this button before trying to input registration to activate the RFID Registration Mode
-               </p>
-            </CardBody>
-          </Card>
 
             {/* New section for registration */}
             <Card className="mt-4 shadow">
@@ -87,22 +93,21 @@ const Tables = () => {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="familiarity">Familiarity</Label>
+                    <Label for="familiarity">ID Number</Label>
                     <Input
                       type="text"
-                      name="familiarity"
-                      id="familiarity"
-                      placeholder="Enter familiarity"
+                      name="id"
+                      id="id"
+                      placeholder="Enter ID"
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="tagId">Tag ID</Label>
-                    <Input
-                      type="text"
-                      name="tagId"
-                      id="tagId"
-                      placeholder="Tag ID"
-                    />
+                    <Label for="Department">Position</Label>
+                    <Input type="select" name="Department" id="Department">
+                      <option value="faculty">Faculty</option>
+                      <option value="staff">Staff</option>
+                      <option value="employee">Employee</option>
+                    </Input>
                   </FormGroup>
                   <Button color="primary">Register</Button>
                 </Form>

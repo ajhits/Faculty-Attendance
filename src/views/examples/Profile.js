@@ -1,5 +1,4 @@
-
-
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -12,14 +11,22 @@ import {
   Row,
   Col,
 } from "reactstrap";
-// core components
 import UserHeader from "components/Headers/UserHeader.js";
 
 const Profile = () => {
+  // Add a state to store the new password
+  const [newPassword, setNewPassword] = useState("");
+
+  // Function to handle updating the password
+  const handleUpdatePassword = () => {
+    // Logic to update the password goes here
+    // You can use the newPassword state variable to get the new password
+    console.log("Updating password:", newPassword);
+  };
+
   return (
     <>
       <UserHeader />
-      {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
           <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
@@ -37,19 +44,13 @@ const Profile = () => {
                   </div>
                 </Col>
               </Row>
-              <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                
-              </CardHeader>
+              <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></CardHeader>
               <CardBody className="pt-0 pt-md-4">
-                <Row>
-                  
-                </Row>
+                <Row></Row>
                 <div className="text-center">
-                  
-                 <br></br><br></br>
-                  <p>
-                    Admin - the controls of this house is made centralized.
-                  </p>
+                  <br></br>
+                  <br></br>
+                  <p>Admin - everything is centralized.</p>
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     Show more
                   </a>
@@ -64,16 +65,7 @@ const Profile = () => {
                   <Col xs="8">
                     <h3 className="mb-0">My account</h3>
                   </Col>
-                  <Col className="text-right" xs="4">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      Settings
-                    </Button>
-                  </Col>
+                  <Col className="text-right" xs="4"></Col>
                 </Row>
               </CardHeader>
               <CardBody>
@@ -116,7 +108,9 @@ const Profile = () => {
                           />
                         </FormGroup>
                       </Col>
-                    </Row><h3>Change Password</h3><br></br>
+                    </Row>
+                    <h3>Change Password</h3>
+                    <br></br>
                     <Row>
                       <Col lg="6">
                         <FormGroup>
@@ -131,8 +125,9 @@ const Profile = () => {
                             defaultValue="*******"
                             id="input-first-name"
                             placeholder="First name"
-                            type="text"
+                            type="password"
                           />
+                          
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -148,16 +143,23 @@ const Profile = () => {
                             defaultValue="*******"
                             id="input-last-name"
                             placeholder="Last name"
-                            type="text"
+                            type="password"
+                            
                           />
+                          
+                          
                         </FormGroup>
+                        <Button
+        className="mt-3 mx-auto d-block" // Center the button and add margin top
+        color="primary"
+        onClick={handleUpdatePassword}
+      >
+        Update
+      </Button>
                       </Col>
                     </Row>
                   </div>
                   <hr className="my-4" />
-                  
-                 
-                 
                 </Form>
               </CardBody>
             </Card>
