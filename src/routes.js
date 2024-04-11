@@ -30,20 +30,7 @@ var routes = [
     component: <Profile />,
     layout: "/admin",
   },
-  {
-    path: "/tables",
-    name: "Registered Users",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/admin",
-  },
-  {
-    path: "/feed",
-    name: "Live Feed",
-    icon: "ni ni-camera-compact text-green",
-    component: <Feed />,
-    layout: "/admin",
-  },
+
  
 
 ];
