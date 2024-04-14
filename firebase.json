@@ -1,10 +1,17 @@
 {
   "hosting": {
+    "site": "faculty-aiot-knows-me",
     "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }
