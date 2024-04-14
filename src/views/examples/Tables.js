@@ -1,5 +1,5 @@
 import {
-  Badge,
+  // Badge,
   Button,
   Card,
   CardBody,
@@ -10,20 +10,73 @@ import {
   Input,
   Label,
   Pagination,
-  PaginationItem,
-  PaginationLink,
+  // PaginationItem,
+  // PaginationLink,
   Table,
   Container,
   Row,
 } from "reactstrap";
 
 import Header from "components/Headers/Header.js";
+import { useEffect, useState } from "react";
+import { getEmployee } from "../../firebase/Database";
+import { createAccount } from "../../firebase/Auth/Authentication";
+
+
+// REGISTER USERS ======================================================================= //
 
 const Tables = () => {
+
+  const [userAccount,setUserAccount] = useState({})
+
+  useEffect(()=>{
+    getEmployee()
+    .then(data=>{
+      setUserAccount(Object.values(data));
+    })  
+    .catch(error=>console.error(error))
+  },[])
+
+
   // Function to handle delete action
   const handleDelete = (userId) => {
     // Perform delete action based on userId
     console.log(`Deleting user with ID: ${userId}`);
+  };
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    idNumber: '',
+    position: 'faculty' // default value
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const capitalizeString = (str) => {
+    const words = str.split(' ');
+    const capitalizedFirstWord = words[0].charAt(0).toUpperCase() + words[0].slice(1).toLowerCase();
+    const restOfWords = words.slice(1).map(word => word.toLowerCase());
+    return [capitalizedFirstWord, ...restOfWords].join(' ');
+  }
+
+  const handleSubmit =  (e) => {
+    e.preventDefault();
+    // console.log(formData); // Logging the form data
+
+    createAccount({...formData, "name": capitalizeString(formData.name)})
+    .then(()=>{
+      alert("account created");
+      window.location.reload();
+    })
+    .catch(error=>alert(error))
+
   };
 
   return (
@@ -37,29 +90,35 @@ const Tables = () => {
             <Card className="shadow">
               <CardHeader className="border-0">
                 <h3 className="mb-0">Users</h3>
+                <h5 className="mb-0">total of registered user: {userAccount.length}</h5>
               </CardHeader>
+              
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">User ID</th>
+                    <th scope="col">Employee ID</th>
                     <th scope="col">Name</th>
-                    <th scope="col">ID Number</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Position</th>
                     <th scope="col">Actions</th> {/* Added column for actions */}
                   </tr>
                 </thead>
                 <tbody>
                   {/* Sample table row */}
-                  <tr>
-                    <td>1</td>
-                    <td>John Doe</td>
-                    <td>1234567890</td>
-                    <td>Manager</td>
-                    <td>
-                      {/* Delete button */}
-                      <Button color="danger" onClick={() => handleDelete(1)}>Delete</Button>
-                    </td>
+
+                  {Object.values(userAccount)?.map((data,key)=>(
+                    <tr key={key}>
+                      <td>{data.idNumber}</td>
+                      <td>{data.name}</td>
+                      <td>{data.email}</td>
+                      <td>{data.position}</td>
+                      <td>
+                        {/* Delete button */}
+                        <Button color="danger" onClick={() => handleDelete(key)}>Delete</Button>
+                      </td>
                   </tr>
+                  ))}
+          
                   {/* Add more table rows here */}
                 </tbody>
               </Table>
@@ -82,35 +141,62 @@ const Tables = () => {
               </CardHeader>
               <CardBody>
                 {/* Form for registration */}
-                <Form>
-                  <FormGroup>
-                    <Label for="name">Name</Label>
-                    <Input
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder="Enter name"
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="familiarity">ID Number</Label>
-                    <Input
-                      type="text"
-                      name="id"
-                      id="id"
-                      placeholder="Enter ID"
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for="Department">Position</Label>
-                    <Input type="select" name="Department" id="Department">
-                      <option value="faculty">Faculty</option>
-                      <option value="staff">Staff</option>
-                      <option value="employee">Employee</option>
-                    </Input>
-                  </FormGroup>
-                  <Button color="primary">Register</Button>
-                </Form>
+                <Form onSubmit={handleSubmit}>
+      <FormGroup>
+        <Label for="name">Name</Label>
+        <Input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Enter name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Label for="email">Email</Label>
+        <Input
+          type="text"
+          name="email"
+          id="email"
+          placeholder="Enter email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Label for="id">Employee Number</Label>
+        <Input
+          type="text"
+          name="idNumber"
+          id="id"
+          placeholder="Enter your Employee Number"
+          value={formData.id}
+          onChange={handleChange}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Label for="position">Position</Label>
+        <Input
+          type="select"
+          name="position"
+          id="department"
+          value={formData.department}
+          onChange={handleChange}
+        >
+          <option value="faculty">Faculty</option>
+          <option value="staff">Staff</option>
+          <option value="employee">Employee</option>
+        </Input>
+      </FormGroup>
+
+      <Button color="primary" type="submit">Register</Button>
+    </Form>
+
+                
               </CardBody>
             </Card>
           </div>

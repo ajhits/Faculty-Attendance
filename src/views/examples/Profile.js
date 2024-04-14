@@ -12,16 +12,32 @@ import {
   Col,
 } from "reactstrap";
 import UserHeader from "components/Headers/UserHeader.js";
+import useAuth from "../../firebase/Auth/StatusLogin";
 
 const Profile = () => {
-  // Add a state to store the new password
-  const [newPassword, setNewPassword] = useState("");
+
+  const { userDetails } = useAuth();
+
+
+  
+  const [formData, setFormData] = useState({
+    oldPassword: '',
+    newPassword: '',
+  });
+
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
   // Function to handle updating the password
   const handleUpdatePassword = () => {
-    // Logic to update the password goes here
-    // You can use the newPassword state variable to get the new password
-    console.log("Updating password:", newPassword);
+
+    console.log("Updating password:", formData);
   };
 
   return (
@@ -63,7 +79,8 @@ const Profile = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">My account</h3>
+                    <h3 className="mb-0">Employee ID</h3>
+                    <h2 className="mb-0">{userDetails.idNumber}</h2>
                   </Col>
                   <Col className="text-right" xs="4"></Col>
                 </Row>
@@ -81,11 +98,11 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Username
+                            Name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
+                            defaultValue={userDetails.name}
                             id="input-username"
                             placeholder="Username"
                             type="text"
@@ -103,6 +120,7 @@ const Profile = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
+                            defaultValue={userDetails.email}
                             placeholder="jesse@example.com"
                             type="email"
                           />
@@ -124,8 +142,11 @@ const Profile = () => {
                             className="form-control-alternative"
                             defaultValue="*******"
                             id="input-first-name"
+                            name="oldPassword"
                             placeholder="First name"
                             type="password"
+                            value={formData.oldPassword}
+                            onChange={handleChange}
                           />
                           
                         </FormGroup>
@@ -144,7 +165,9 @@ const Profile = () => {
                             id="input-last-name"
                             placeholder="Last name"
                             type="password"
-                            
+                            name="newPassword"
+                            value={formData.newPassword}
+                            onChange={handleChange}
                           />
                           
                           
@@ -154,7 +177,7 @@ const Profile = () => {
         color="primary"
         onClick={handleUpdatePassword}
       >
-        Update
+        Update Password
       </Button>
                       </Col>
                     </Row>

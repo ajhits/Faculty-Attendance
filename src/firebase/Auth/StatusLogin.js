@@ -1,10 +1,25 @@
 import React, { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../Configuration";
+import { getUserData } from "../../firebase/Database";
+import { LogoutSession } from "./Authentication";
 
 function useAuth() {
   const [user, setUser] = React.useState();
   const [data, setData] = React.useState();
+  const [position, setPosition] = React.useState();
+  const [userDetails, setUserDetails] = React.useState({
+    "name" : "",
+    "idNumber": "",
+    "email": "",
+    "position": ""
+  });
+
+  // const getUserDetails = async (uid) =>{
+  //   const data = await getUserData(uid);
+  //   setUserDetails(data)
+  //   setPosition(data.position)
+  // }
 
   useEffect(() => {
     const unsubscribeFromAuthStateChanged = onAuthStateChanged(auth, (user) => {
@@ -13,10 +28,28 @@ function useAuth() {
         // https://firebase.google.com/docs/reference/js/firebase.User
         setUser("panel");
         setData(user);
+
+        getUserData(user.uid).then(
+          data=>{
+
+            if (data.position !== "admin"){
+              alert("You are not admin, you are about to logout")
+              LogoutSession()
+            }
+            setUserDetails(data)
+            setPosition(data.position)
+          }
+        )
       } else {
         // User is signed out
         setUser("login");
         setData(null);
+        setUserDetails({
+          "name" : "",
+          "idNumber": "",
+          "email": "",
+          "position": ""
+        });
       }
     });
 
@@ -25,7 +58,9 @@ function useAuth() {
 
   return {
     user,
-    data
+    data,
+    userDetails,
+    position
   };
 }
 

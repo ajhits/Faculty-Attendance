@@ -12,7 +12,8 @@ import {
 } from "firebase/auth";
 
 import { auth } from "../Configuration";
-import { createUserAccount } from "../Firestore";
+
+import { createEmployee } from "../Database";
 
 
 // change password
@@ -130,19 +131,19 @@ export const LogoutSession = async () => {
   // create account
   export const createAccount = (data) => {
     return new Promise((resolve, reject) => {
-      createUserWithEmailAndPassword(auth, data.email, data.password)
-        .then((res) => {
-            console.log(res)
-            createUserAccount(res.user.uid,data)
+      createUserWithEmailAndPassword(auth, data.email, "hello friend")
+        .then(async (res) => {
+
+          await createEmployee({"id": res.user.uid, "data": data})
             
-            resolve(res); // Resolve the promise with the response from createUserWithEmailAndPassword
+          resolve(res); // Resolve the promise with the response from createUserWithEmailAndPassword
         })
         .catch((error) => {
 
-          const errorMessage = error.message.match(/\((.*?)\)/)[1];
-          const errorMessages = errorMessage.replace('auth/', '').replace(/-/g, ' ');
+          // const errorMessage = error.message.match(/\((.*?)\)/)[1];
+          // const errorMessages = errorMessage.replace('auth/', '').replace(/-/g, ' ');
 
-          reject(errorMessages); // Reject the promise with the error from createUserWithEmailAndPassword
+          reject(error); // Reject the promise with the error from createUserWithEmailAndPassword
         });
     });
   };

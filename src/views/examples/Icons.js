@@ -5,45 +5,348 @@ import {
   CardBody,
   Container,
   Row,
-  Col,
+  // Col,
   Input,
   Button,
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
 import * as XLSX from "xlsx";
+import { getHistory } from "../../firebase/Database";
 
+
+// TABLES ======================================================================= //
 const Icons = () => {
-  // Example data for the table
-  const [data] = useState([
-    {
-      name: "Device 1",
-      temperature: 25,
-      timeIn: "10:00",
-      timeOut: "17:00",
-      date: "2024-04-11",
-    },
-    {
-      name: "Device 2",
-      temperature: 26,
-      timeIn: "11:00",
-      timeOut: "18:00",
-      date: "2024-04-18",
-    },
-    {
-      name: "Device 3",
-      temperature: 24,
-      timeIn: "12:00",
-      timeOut: "19:00",
-      date: "2024-05-02",
-    },
-    // Add more data as needed
-  ]);
 
-  const [filteredData, setFilteredData] = useState(data);
+
+  // const [dummyData] = useState({
+  //   "April 14 2024": {
+  //     "Art lisboa": {
+  //       "Time In": "01:38 AM",
+  //       "Time Out": "01:36 AM",
+  //       "temp": "27.77"
+  //     },
+  //     "No match detected": {
+  //       "-NvNM64t2MigaMtA_5ts": {
+  //         "Time In": "12:48 AM"
+  //       },
+  //       "-NvNM66c7g6F-syHHLNM": {
+  //         "temp": "27.8"
+  //       },
+  //       "-NvNP0kmgCd2tumb4ZZe": {
+  //         "Time In": "01:01 AM"
+  //       },
+  //       "-NvNP0rKxC8AwUJxUAkk": {
+  //         "temp": "27.8"
+  //       },
+  //       "-NvNPMSl-OFf_j__0pgc": {
+  //         "Time In": "01:02 AM"
+  //       },
+  //       "-NvNPMXBzVR4WEDj1-Vr": {
+  //         "temp": "27.8"
+  //       },
+  //       "-NvNUGU3CtL7cPxtah_L": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUGWnqCHG07iE1x5a": {
+  //         "temp": "29.05"
+  //       },
+  //       "-NvNUL8RmHY4x9r6W6OP": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNULAL24fqz7Bw2Uld": {
+  //         "temp": "28.85"
+  //       },
+  //       "-NvNUMc7b6pJ4W3sAX_n": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUMf-pZwNNXlKVM0L": {
+  //         "temp": "29.05"
+  //       },
+  //       "-NvNUNOd_4eARedJjFTP": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUNRU-9cwDPVndz6N": {
+  //         "temp": "28.77"
+  //       },
+  //       "-NvNUNW_BA53zmZVME2z": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUN_NnGBq9QK_alF1": {
+  //         "temp": "28.77"
+  //       },
+  //       "-NvNUOnQAaIsdREmpT3J": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUOqqCjtffVt29ebV": {
+  //         "temp": "28.71"
+  //       },
+  //       "-NvNUR6q3J92ySGtO7km": {
+  //         "Time In": "01:25 AM"
+  //       },
+  //       "-NvNURA4DdoQh3LeasIx": {
+  //         "temp": "28.71"
+  //       },
+  //       "-NvNUT2olJFdsiU7ORtl": {
+  //         "Time In": "01:25 AM"
+  //       },
+  //       "-NvNUT5GnLXTWcxsSA_S": {
+  //         "temp": "28.71"
+  //       },
+  //       "-NvNUfznin-FIJaig6Xo": {
+  //         "Time Out": "01:26 AM"
+  //       },
+  //       "-NvNVBnobSw_qw12DbdS": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVBtiLGBtKzyfP3lw": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVC2JlPwQXg3FXaql": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVC8epSMQ9vGHvM8Y": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVD1t_Qxp6KRPW9kw": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVD5iQQHrBLtcrEb5": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVDCRHlwKjwe548pg": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVDDcWsIJsNuvRA7n": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVDG4nhKpEqTFtztC": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVDH_uc7xirBnmooT": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNW9f3LDgWob5E6lvG": {
+  //         "Time Out": "01:32 AM"
+  //       },
+  //       "-NvNWFVoKPdX5bSu4gAa": {
+  //         "Time Out": "01:33 AM"
+  //       },
+  //       "-NvNWUtAsDorQCKAO2KB": {
+  //         "Time Out": "01:34 AM"
+  //       },
+  //       "-NvNWV8xEAYAKH9ky2vW": {
+  //         "Time Out": "01:34 AM"
+  //       },
+  //       "-NvNWVcxdp5avsJF5dTt": {
+  //         "Time Out": "01:34 AM"
+  //       },
+  //       "-NvNWvx8Sj3o8UGLtYJ9": {
+  //         "Time Out": "01:35 AM"
+  //       }
+  //     }
+  //   },
+  //   "April 12 2024": {
+  //     "Art lisboa": {
+  //       "Time In": "01:38 AM",
+  //       "Time Out": "01:36 AM",
+  //       "temp": "27.77"
+  //     },
+  //     "No match detected": {
+  //       "-NvNM64t2MigaMtA_5ts": {
+  //         "Time In": "12:48 AM"
+  //       },
+  //       "-NvNM66c7g6F-syHHLNM": {
+  //         "temp": "27.8"
+  //       },
+  //       "-NvNP0kmgCd2tumb4ZZe": {
+  //         "Time In": "01:01 AM"
+  //       },
+  //       "-NvNP0rKxC8AwUJxUAkk": {
+  //         "temp": "27.8"
+  //       },
+  //       "-NvNPMSl-OFf_j__0pgc": {
+  //         "Time In": "01:02 AM"
+  //       },
+  //       "-NvNPMXBzVR4WEDj1-Vr": {
+  //         "temp": "27.8"
+  //       },
+  //       "-NvNUGU3CtL7cPxtah_L": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUGWnqCHG07iE1x5a": {
+  //         "temp": "29.05"
+  //       },
+  //       "-NvNUL8RmHY4x9r6W6OP": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNULAL24fqz7Bw2Uld": {
+  //         "temp": "28.85"
+  //       },
+  //       "-NvNUMc7b6pJ4W3sAX_n": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUMf-pZwNNXlKVM0L": {
+  //         "temp": "29.05"
+  //       },
+  //       "-NvNUNOd_4eARedJjFTP": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUNRU-9cwDPVndz6N": {
+  //         "temp": "28.77"
+  //       },
+  //       "-NvNUNW_BA53zmZVME2z": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUN_NnGBq9QK_alF1": {
+  //         "temp": "28.77"
+  //       },
+  //       "-NvNUOnQAaIsdREmpT3J": {
+  //         "Time In": "01:24 AM"
+  //       },
+  //       "-NvNUOqqCjtffVt29ebV": {
+  //         "temp": "28.71"
+  //       },
+  //       "-NvNUR6q3J92ySGtO7km": {
+  //         "Time In": "01:25 AM"
+  //       },
+  //       "-NvNURA4DdoQh3LeasIx": {
+  //         "temp": "28.71"
+  //       },
+  //       "-NvNUT2olJFdsiU7ORtl": {
+  //         "Time In": "01:25 AM"
+  //       },
+  //       "-NvNUT5GnLXTWcxsSA_S": {
+  //         "temp": "28.71"
+  //       },
+  //       "-NvNUfznin-FIJaig6Xo": {
+  //         "Time Out": "01:26 AM"
+  //       },
+  //       "-NvNVBnobSw_qw12DbdS": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVBtiLGBtKzyfP3lw": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVC2JlPwQXg3FXaql": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVC8epSMQ9vGHvM8Y": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVD1t_Qxp6KRPW9kw": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVD5iQQHrBLtcrEb5": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVDCRHlwKjwe548pg": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVDDcWsIJsNuvRA7n": {
+  //         "Time In": "01:28 AM"
+  //       },
+  //       "-NvNVDG4nhKpEqTFtztC": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNVDH_uc7xirBnmooT": {
+  //         "temp": "27.83"
+  //       },
+  //       "-NvNW9f3LDgWob5E6lvG": {
+  //         "Time Out": "01:32 AM"
+  //       },
+  //       "-NvNWFVoKPdX5bSu4gAa": {
+  //         "Time Out": "01:33 AM"
+  //       },
+  //       "-NvNWUtAsDorQCKAO2KB": {
+  //         "Time Out": "01:34 AM"
+  //       },
+  //       "-NvNWV8xEAYAKH9ky2vW": {
+  //         "Time Out": "01:34 AM"
+  //       },
+  //       "-NvNWVcxdp5avsJF5dTt": {
+  //         "Time Out": "01:34 AM"
+  //       },
+  //       "-NvNWvx8Sj3o8UGLtYJ9": {
+  //         "Time Out": "01:35 AM"
+  //       }
+  //     }
+  //   }
+  // })
+
+
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("daily");
   const tableRef = useRef(null);
 
+  // Example data for the table
+const [data,setData] = useState([
+  {
+    name: "Device 1",
+    temp: 25,
+    timeIn: "10:00",
+    timeOut: "17:00",
+    date: "April 11 2024",
+  },
+  {
+    name: "Device 2",
+    temperature: 26,
+    timeIn: "11:00",
+    timeOut: "18:00",
+    date: "April 12 2024",
+  },
+  {
+    name: "Device 3",
+    temperature: 24,
+    timeIn: "12:00",
+    timeOut: "19:00",
+    date: "January 13 2024",
+  },
+  // Add more data as needed
+]);
+const [filteredData, setFilteredData] = useState([]);
+
+  const filterNoMatchData = (dummyData) => {
+    const filteredData = Object.entries(dummyData).reduce((acc, [date, data]) => {
+        const filtered = Object.keys(data).reduce((obj, key) => {
+            if (key !== "No match detected") {
+                obj[key] = data[key];
+            }
+            return obj;
+        }, {});
+        acc[date] = filtered;
+        return acc;
+    }, {});
+
+    const transformedData = [];
+
+    for (const [date, devices] of Object.entries(filteredData)) {
+        for (const [deviceName, deviceData] of Object.entries(devices)) {
+            const { "Time In": timeIn, "Time Out": timeOut, temp } = deviceData;
+            transformedData.push({
+                name: deviceName,
+                temperature: temp || "N/A",
+                timeIn: timeIn || "N/A",
+                timeOut: timeOut || "N/A",
+                date: date,
+            });
+        }
+    }
+
+    return transformedData;
+  };
+
+
+  React.useEffect(()=>{
+
+    getHistory()
+    .then(data=>{
+      setData(filterNoMatchData(data))
+      setFilteredData(filterNoMatchData(data))
+    }).catch(error=>console.log(error))
+
+  },[])
+
+  
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();
     setSearchTerm(searchTerm);
@@ -140,9 +443,7 @@ const Icons = () => {
                     <option value="monthly">Sort by Monthly</option>
                   </select>
                 </div>
-                <Button color="success" onClick={handleDownloadExcel}>
-                  Download as Excel
-                </Button>
+   
                 <div className="table-responsive">
                   <table ref={tableRef} className="table">
                     <thead>
@@ -167,6 +468,12 @@ const Icons = () => {
                     </tbody>
                   </table>
                 </div>
+                
+                <br/>
+                <Button color="success" onClick={handleDownloadExcel}>
+                  Download as Excel
+                </Button>
+
               </CardBody>
             </Card>
           </div>

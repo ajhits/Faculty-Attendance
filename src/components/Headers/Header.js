@@ -27,7 +27,7 @@ const Header = () => {
     users.forEach(user => {
       const entries = data[user];
 
-      console.log("for each: ",entries)
+   
       Object.keys(entries).forEach(entry => {
 
         // I get undefined on this
@@ -55,6 +55,8 @@ const Header = () => {
       setTotal(calculateGrandTotal(data))
     }).catch(error=>console.log(error))
   },[])
+
+  
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
@@ -112,7 +114,8 @@ const Header = () => {
                   </CardBody>
                 </Card>
               </Col>
-              <Col lg="6" xl="3">
+
+              {/* <Col lg="6" xl="3">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
                     <Row>
@@ -134,8 +137,9 @@ const Header = () => {
                   
                   </CardBody>
                 </Card>
-              </Col>
-              <Col lg="6" xl="3">
+              </Col> */}
+
+              {/* <Col lg="6" xl="3">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
                     <Row>
@@ -157,7 +161,8 @@ const Header = () => {
                    
                   </CardBody>
                 </Card>
-              </Col>
+              </Col> */}
+
             </Row>
           </div>
         </Container>

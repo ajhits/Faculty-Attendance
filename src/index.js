@@ -16,6 +16,7 @@ const Index = () =>{
 
   const { user,data } = useAuth();
 
+ 
   return(
   <BrowserRouter>
       {user === "login" && <Login  /> }
@@ -28,6 +29,9 @@ const Index = () =>{
 ReactDOM.render( <Index />, document.getElementById("root") );
 
 const Admin = ({data}) => {
+
+
+
   return(
     <Routes>
       <Route path="/admin/*" element={<AdminLayout />} />
