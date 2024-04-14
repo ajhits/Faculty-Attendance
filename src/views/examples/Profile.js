@@ -82,7 +82,8 @@ const Profile = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">My account</h3>
+                    <h3 className="mb-0">Employee ID</h3>
+                    <h2 className="mb-0">{userDetails.idNumber}</h2>
                   </Col>
                   <Col className="text-right" xs="4"></Col>
                 </Row>
