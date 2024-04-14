@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import UserHeader from "components/Headers/UserHeader.js";
 import useAuth from "../../firebase/Auth/StatusLogin";
+import { updatePasswords } from "../../firebase/Auth/Authentication";
 
 const Profile = () => {
 
@@ -37,6 +38,7 @@ const Profile = () => {
   // Function to handle updating the password
   const handleUpdatePassword = () => {
 
+    updatePasswords(formData)
     console.log("Updating password:", formData);
   };
 

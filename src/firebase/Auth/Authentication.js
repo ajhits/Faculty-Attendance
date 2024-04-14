@@ -150,14 +150,14 @@ export const LogoutSession = async () => {
 
 
   // update Password
-  export const updatePasswords = async (oldPassword,newPassword) => {
+  export const updatePasswords = async (props) => {
     return new Promise((resolve, reject) => {
-      const credential = EmailAuthProvider.credential(auth.currentUser.email, oldPassword);
+      const credential = EmailAuthProvider.credential(auth.currentUser.email, props.oldPassword);
   
       reauthenticateWithCredential(auth.currentUser, credential)
         .then((e) => {
   
-          updatePassword(auth.currentUser, newPassword).then(() => {
+          updatePassword(auth.currentUser, props.newPassword).then(() => {
             // Update successful.\
   
             alert("Password updated please login again!")
