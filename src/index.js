@@ -44,7 +44,7 @@ const Login = () => {
   return(
     <Routes>
       <Route path="/auth/*" element={<AuthLayout />} />
-      <Route path="*" element={<Navigate to="/auth/index" replace />} />
+      <Route path="*" element={<Navigate to="/auth/login" replace />} />
     </Routes>
   )
 }
