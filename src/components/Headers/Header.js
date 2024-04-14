@@ -27,7 +27,6 @@ const Header = () => {
     users.forEach(user => {
       const entries = data[user];
 
-      console.log("for each: ",entries)
       Object.keys(entries).forEach(entry => {
 
         // I get undefined on this
@@ -112,7 +111,8 @@ const Header = () => {
                   </CardBody>
                 </Card>
               </Col>
-              <Col lg="6" xl="3">
+
+              {/* <Col lg="6" xl="3">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
                     <Row>
@@ -134,8 +134,9 @@ const Header = () => {
                   
                   </CardBody>
                 </Card>
-              </Col>
-              <Col lg="6" xl="3">
+              </Col> */}
+
+              {/* <Col lg="6" xl="3">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
                     <Row>
@@ -157,7 +158,8 @@ const Header = () => {
                    
                   </CardBody>
                 </Card>
-              </Col>
+              </Col> */}
+
             </Row>
           </div>
         </Container>

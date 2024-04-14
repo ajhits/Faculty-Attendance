@@ -5,16 +5,20 @@ import {
   CardBody,
   Container,
   Row,
-  Col,
+ 
   Input,
   Button,
 } from "reactstrap";
 import Header from "components/Headers/Header.js";
 import * as XLSX from "xlsx";
+import { getHistory } from "../../firebase/Database";
+import useAuth from "../../firebase/Auth/StatusLogin";
 
 const Icons = () => {
+  const { userDetails } = useAuth();
+
   // Example data for the table
-  const [data] = useState([
+  const [data,setData] = useState([
     {
       name: "Device 1",
       temperature: 25,
@@ -43,6 +47,48 @@ const Icons = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("daily");
   const tableRef = useRef(null);
+
+  const filterNoMatchData = (dummyData) => {
+    const filteredData = Object.entries(dummyData).reduce((acc, [date, data]) => {
+        const filtered = Object.keys(data).reduce((obj, key) => {
+            if (key !== "No match detected") {
+                obj[key] = data[key];
+            }
+            return obj;
+        }, {});
+        acc[date] = filtered;
+        return acc;
+    }, {});
+
+    const transformedData = [];
+
+    for (const [date, devices] of Object.entries(filteredData)) {
+        for (const [deviceName, deviceData] of Object.entries(devices)) {
+            const { "Time In": timeIn, "Time Out": timeOut, temp } = deviceData;
+            transformedData.push({
+                name: deviceName,
+                temperature: temp || "N/A",
+                timeIn: timeIn || "N/A",
+                timeOut: timeOut || "N/A",
+                date: date,
+            });
+        }
+    }
+
+    return transformedData;
+  };
+
+  React.useEffect(()=>{
+
+    getHistory()
+    .then(data=>{
+      setData(filterNoMatchData(data).filter(data=>data.name === userDetails.name))
+      setFilteredData(filterNoMatchData(data).filter(data=>data.name === userDetails.name))
+      console.log(filterNoMatchData(data).filter(data=>data.name === userDetails.name))
+    }).catch(error=>console.log(error))
+
+  },[userDetails.name])
+
 
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();
@@ -140,14 +186,11 @@ const Icons = () => {
                     <option value="monthly">Sort by Monthly</option>
                   </select>
                 </div>
-                <Button color="success" onClick={handleDownloadExcel}>
-                  Download as Excel
-                </Button>
+      
                 <div className="table-responsive">
                   <table ref={tableRef} className="table">
                     <thead>
                       <tr>
-                        <th>Name</th>
                         <th>Temperature (°C)</th>
                         <th>Time In</th>
                         <th>Time Out</th>
@@ -157,7 +200,6 @@ const Icons = () => {
                     <tbody>
                       {filteredData.map((device, index) => (
                         <tr key={index}>
-                          <td>{device.name}</td>
                           <td>{device.temperature}</td>
                           <td>{device.timeIn}</td>
                           <td>{device.timeOut}</td>
@@ -167,6 +209,12 @@ const Icons = () => {
                     </tbody>
                   </table>
                 </div>
+                
+                <br />
+                <Button color="success" onClick={handleDownloadExcel}>
+                  Download as Excel
+                </Button>
+
               </CardBody>
             </Card>
           </div>

@@ -8,7 +8,7 @@ import {
     // push
 } from "firebase/database";
 
-// GET HISTORY
+// GET HISTORY TODAY
 export const getHistoryToday = async (date) => {
     return new Promise((resolve, reject) => {
       try {
@@ -31,6 +31,92 @@ export const getHistoryToday = async (date) => {
       }
     });
   }
+
+  // GET HISTORY
+export const getHistory = async () => {
+  return new Promise((resolve, reject) => {
+    try {
+      
+      const dbRef = ref(database, `History/`);
+      onValue(dbRef, (snapshot) => 
+        {
+    
+          const data = snapshot.val();
+  
+
+          resolve(data) 
+        }, (error) => 
+        {
+          reject(error);
+        });
+
+    }catch(error){
+      reject(error);
+    }
+  });
+}
+
+// GET EMPLOYEE
+export const getEmployee = async () => {
+  return new Promise((resolve, reject) => {
+    try {
+      
+      const dbRef = ref(database, `Account`);
+      onValue(dbRef, (snapshot) => 
+        {
+    
+          const data = snapshot.val();
+  
+
+          resolve(data) 
+        }, (error) => 
+        {
+          reject(error);
+        });
+
+    }catch(error){
+      reject(error);
+    }
+  });
+}
+
+// CREATE EMPLOYEE
+export const createEmployee = async (props) => {
+
+  return new Promise((resolve, reject) => {
+    try {
+      set(ref(database, 'Account/' + String(props.id)),props.data);
+      resolve("okay")
+    } catch (err) {
+      console.error(err);
+      reject(err)
+    }
+  })
+
+}
+
+// GET USER DATA
+export const getUserData = async (uid) => {
+  return new Promise((resolve, reject) => {
+    try {
+      
+      const dbRef = ref(database, `Account/${uid}`);
+      onValue(dbRef, (snapshot) => 
+        {
+    
+          const data = snapshot.val();
+
+          resolve(data)
+        }, (error) => 
+        {
+          reject(error);
+        });
+
+    }catch(error){
+      reject(error);
+    }
+  });
+}
 
 
 //   OLD CODE

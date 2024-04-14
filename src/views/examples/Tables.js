@@ -1,5 +1,5 @@
 import {
-  Badge,
+  // Badge,
   Button,
   Card,
   CardBody,
@@ -10,8 +10,8 @@ import {
   Input,
   Label,
   Pagination,
-  PaginationItem,
-  PaginationLink,
+  // PaginationItem,
+  // PaginationLink,
   Table,
   Container,
   Row,
