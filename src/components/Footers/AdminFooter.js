@@ -1,7 +1,9 @@
 
 
 // reactstrap components
-import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
+import { 
+  // Container, 
+  Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
 const Footer = () => {
   return (

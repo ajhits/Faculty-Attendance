@@ -102,6 +102,7 @@ const Sidebar = (props) => {
           <span className="navbar-toggler-icon" />
         </button>
         {/* Brand */}
+
         {logo ? (
           <NavbarBrand className="pt-0" {...navbarBrandProps}>
            FACULTY
@@ -166,11 +167,15 @@ const Sidebar = (props) => {
                 <Col className="collapse-brand" xs="6">
                   {logo.innerLink ? (
                     <Link to={logo.innerLink}>
-                      <img alt={logo.imgAlt} src={logo.imgSrc} />
+                      <NavbarBrand className="pt-0" {...navbarBrandProps}>
+                        FACULTY
+                      </NavbarBrand>
                     </Link>
                   ) : (
                     <a href={logo.outterLink}>
-                      <img alt={logo.imgAlt} src={logo.imgSrc} />
+                      <NavbarBrand className="pt-0" {...navbarBrandProps}>
+                        FACULTY
+                      </NavbarBrand>
                     </a>
                   )}
                 </Col>
