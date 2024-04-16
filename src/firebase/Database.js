@@ -118,6 +118,23 @@ export const getUserData = async (uid) => {
   });
 }
 
+// REMOVE USER
+export const removeUser = (ID) => {
+  return new Promise((resolve, reject) => {
+
+      const keyRef = ref(database, `Account/${ID}`);
+      remove(keyRef)
+          .then(() => {
+              console.log(ID);
+              console.log(`Key "${ID}" removed successfully.`);
+              resolve(`Key "${ID}" removed successfully.`);
+          })
+          .catch((error) => {
+              console.error(`Error removing key "${ID}":`, error);
+              reject(error);
+          });
+  });
+};
 
 //   OLD CODE
 export const addNewRoom = async (props) => {

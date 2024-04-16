@@ -19,7 +19,7 @@ import {
 
 import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
-import { getEmployee } from "../../firebase/Database";
+import { getEmployee, removeUser } from "../../firebase/Database";
 import { createAccount } from "../../firebase/Auth/Authentication";
 
 
@@ -32,7 +32,11 @@ const Tables = () => {
   useEffect(()=>{
     getEmployee()
     .then(data=>{
-      setUserAccount(Object.values(data));
+
+      const KEY = Object.keys(data)
+      // Object.values(data).map((data,key)=>({...data, "UID": KEY[key]}))
+      // console.log(Object.values(data).map((data,key)=>({...data, "UID": KEY[key]})))
+      setUserAccount(Object.values(data).map((data,key)=>({...data, "UID": KEY[key]})));
     })  
     .catch(error=>console.error(error))
   },[])
@@ -42,6 +46,11 @@ const Tables = () => {
   const handleDelete = (userId) => {
     // Perform delete action based on userId
     console.log(`Deleting user with ID: ${userId}`);
+
+    removeUser(userId).then(data=>{
+      alert(data);
+      window.location.reload()
+    }).catch(error=>alert(error))
   };
 
   const [formData, setFormData] = useState({
@@ -114,7 +123,7 @@ const Tables = () => {
                       <td>{data.position}</td>
                       <td>
                         {/* Delete button */}
-                        <Button color="danger" onClick={() => handleDelete(key)}>Delete</Button>
+                        <Button color="danger" onClick={() => handleDelete(data.UID)}>Delete</Button>
                       </td>
                   </tr>
                   ))}
