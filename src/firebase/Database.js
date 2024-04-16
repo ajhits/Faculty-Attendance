@@ -105,7 +105,7 @@ export const getUserData = async (uid) => {
         {
     
           const data = snapshot.val();
-
+          
           resolve(data)
         }, (error) => 
         {

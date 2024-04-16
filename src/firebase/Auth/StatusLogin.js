@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../Configuration";
 import { getUserData } from "../../firebase/Database";
+import { deleteAccount } from "./Authentication";
 
 function useAuth() {
   const [user, setUser] = React.useState();
@@ -30,9 +31,15 @@ function useAuth() {
 
         getUserData(user.uid).then(
           data=>{
-            setUserDetails(data)
-            setPosition(data.position)
+            try{
+              setUserDetails(data);
+              setPosition(data.position);
+            }catch(e){
+              alert("You are no longer access to this site");
+              deleteAccount();
+            }
           }
+            
         )
       } else {
         // User is signed out

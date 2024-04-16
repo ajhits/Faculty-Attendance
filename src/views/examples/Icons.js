@@ -13,6 +13,7 @@ import Header from "components/Headers/Header.js";
 import * as XLSX from "xlsx";
 import { getHistory } from "../../firebase/Database";
 import useAuth from "../../firebase/Auth/StatusLogin";
+import { LogoutSession } from "../../firebase/Auth/Authentication";
 
 const Icons = () => {
   const { userDetails } = useAuth();
@@ -79,6 +80,10 @@ const Icons = () => {
   };
 
   React.useEffect(()=>{
+
+    if (userDetails.name === null){
+      LogoutSession()
+    }
 
     getHistory()
     .then(data=>{
