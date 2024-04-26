@@ -77,14 +77,19 @@ const Tables = () => {
 
   const handleSubmit =  (e) => {
     e.preventDefault();
-    // console.log(formData); // Logging the form data
+    console.log(userAccount.filter(filter=>filter.idNumber === "2019-201745").length); // Logging the form data
 
-    createAccount({...formData, "name": capitalizeString(formData.name)})
-    .then(()=>{
-      alert("account created");
-      window.location.reload();
-    })
-    .catch(error=>alert(error))
+    if (userAccount.filter(filter=>filter.idNumber === formData.idNumber).length < 0 ) {
+      createAccount({...formData, "name": capitalizeString(formData.name)})
+      .then(()=>{
+        alert("account created");
+        window.location.reload();
+      })
+      .catch(error=>alert(error))
+        return
+      }
+    alert("Oops! 😕 It seems like the employee number you entered already exists in our system. Please review your input or try a different employee number.")
+    
 
   };
 
