@@ -77,9 +77,10 @@ const Tables = () => {
 
   const handleSubmit =  (e) => {
     e.preventDefault();
-    console.log(userAccount.filter(filter=>filter.idNumber === "2019-201745").length); // Logging the form data
 
-    if (userAccount.filter(filter=>filter.idNumber === formData.idNumber).length < 0 ) {
+    console.log(userAccount.filter(filter=>filter.idNumber === formData.idNumber).length);
+
+    if (userAccount.filter(filter=>filter.idNumber === formData.idNumber).length === 0 ) {
       createAccount({...formData, "name": capitalizeString(formData.name)})
       .then(()=>{
         alert("account created");
