@@ -49,7 +49,7 @@ const Auth = (props) => {
                 <Col lg="5" md="6">
                   <h1 className="text-white">Welcome!</h1>
                   <p className="text-lead text-light">
-                    RTU FACULTY ATTENDANCE SYSTEM
+                    AI Driven Face Recognition and Temperature Checking with IOT Monitoring for RTU-Pasig Employees.
                   </p>
                 </Col>
               </Row>

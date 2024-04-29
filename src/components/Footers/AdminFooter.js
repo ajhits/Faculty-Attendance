@@ -1,6 +1,4 @@
 
-
-// reactstrap components
 import { 
   // Container, 
   Row, Col, Nav, NavItem, NavLink } from "reactstrap";
@@ -14,7 +12,7 @@ const Footer = () => {
             © {new Date().getFullYear()}{" "}
             <a
               className="font-weight-bold ml-1"
-              href="/"
+              href="/admin/maps"
               rel="noopener noreferrer"
        
             >

@@ -1,10 +1,11 @@
 
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
-// import Maps from "views/examples/Maps.js";
+import Maps from "views/examples/Maps.js";
 // import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
+import Forgot from "views/examples/Forgot.js";
 import Icons from "views/examples/Icons.js";
 // import Feed from "views/examples/Feed.js";
 
@@ -37,13 +38,13 @@ var routes = [
     component: <Tables />,
     layout: "/admin",
   },
-  // {
-  //   path: "/feed",
-  //   name: "Live Feed",
-  //   icon: "ni ni-camera-compact text-green",
-  //   component: <Feed />,
-  //   layout: "/admin",
-  // },
+  {
+    path: "/maps",
+    name: "About Us",
+    icon: "ni ni-camera-compact text-green",
+    component: <Maps />,
+    layout: "/admin",
+  },
   {
     path: "/login",
     name: "Login",
@@ -51,14 +52,14 @@ var routes = [
     component: <Login />,
     layout: "/auth",
   }
-  // ,
-  // {
-  //   path: "/register",
-  //   name: "Register",
-  //   icon: "ni ni-circle-08 text-pink",
-  //   component: <Register />,
-  //   layout: "/auth",
-  // },
+  ,
+  {
+    path: "/Forgot",
+    name: "Register",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Forgot />,
+    layout: "/auth",
+  },
  
 
 ];

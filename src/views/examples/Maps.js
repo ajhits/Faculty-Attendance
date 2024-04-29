@@ -1,83 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { Card, Container, Row } from "reactstrap";
+import React from "react";
+import { Card, Container, Row, Col } from "reactstrap";
 import Header from "components/Headers/Header.js";
-
-const MapWrapper = () => {
-  const mapRef = useRef(null);
-
-  useEffect(() => {
-    const google = window.google;
-    const map = new google.maps.Map(mapRef.current, {
-      center: { lat: 14.5875, lng: 120.9856 },
-      zoom: 12,
-      scrollwheel: false,
-      zoomControl: true,
-      styles: [
-        {
-          featureType: "administrative",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#444444" }],
-        },
-        {
-          featureType: "landscape",
-          elementType: "all",
-          stylers: [{ color: "#f2f2f2" }],
-        },
-        {
-          featureType: "poi",
-          elementType: "all",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "road",
-          elementType: "all",
-          stylers: [{ saturation: -100 }, { lightness: 45 }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "all",
-          stylers: [{ visibility: "simplified" }],
-        },
-        {
-          featureType: "road.arterial",
-          elementType: "labels.icon",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "transit",
-          elementType: "all",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "water",
-          elementType: "all",
-          stylers: [{ color: "#5e72e4" }, { visibility: "on" }],
-        },
-      ],
-    });
-
-    const marker = new google.maps.Marker({
-      position: { lat: 14.5875, lng: 120.9856 },
-      map: map,
-      animation: google.maps.Animation.DROP,
-      title: "Light Bootstrap Dashboard PRO React!",
-    });
-
-    const contentString =
-      '<div class="info-window-content"><h2>Light Bootstrap Dashboard PRO React</h2>' +
-      "<p>A premium Admin for React-Bootstrap, Bootstrap, React, and React Hooks.</p></div>";
-
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-    });
-
-    marker.addListener("click", function () {
-      infowindow.open(map, marker);
-    });
-  }, []);
-
-  return <div style={{ height: `600px` }} className="map-canvas" ref={mapRef}></div>;
-};
 
 const Maps = () => {
   return (
@@ -85,11 +8,40 @@ const Maps = () => {
       <Header />
       <Container className="mt--7" fluid>
         <Row>
-          <div className="col">
-            <Card className="shadow border-0">
-              <MapWrapper />
+          <Col>
+            <Card className="shadow border-0 p-4">
+              <h2 className="mb-4">About AIOTKnows Me</h2>
+              <p>
+                AIOTKnows Me is a platform dedicated to exploring the intersection of AI (Artificial Intelligence),
+                IoT (Internet of Things), and knowledge discovery. We strive to provide insights, resources, and
+                solutions at the nexus of these rapidly evolving technologies.
+              </p>
+              <p>
+                Our mission is to empower individuals and businesses with the knowledge and tools necessary to harness
+                the full potential of AI and IoT, driving innovation, efficiency, and progress in various domains.
+              </p>
+              <h3 className="mt-5">Our Team</h3>
+              <p>
+                At AIOTKnows Me, we are proud to have a diverse team of experts in AI, IoT, data science, and related
+                fields. Our team members are passionate about leveraging cutting-edge technologies to tackle complex
+                challenges and create impactful solutions.
+              </p>
+              <p>
+                Together, we are dedicated to pushing the boundaries of what is possible, driving forward the frontier
+                of AI and IoT applications, and shaping a future where intelligent technologies enhance lives and
+                transform industries.
+              </p>
+              <h3 className="mt-5">Contact Us</h3>
+              <p>
+                We would love to hear from you! Whether you have questions, feedback, or collaboration opportunities,
+                feel free to reach out to us.
+              </p>
+              <p>
+                Email: contact@aiotknowsme.com <br />
+                Phone: +1 (123) 456-7890
+              </p>
             </Card>
-          </div>
+          </Col>
         </Row>
       </Container>
     </>

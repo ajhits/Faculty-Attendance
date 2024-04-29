@@ -1,7 +1,6 @@
 
 import { LoginSession } from "../../firebase/Auth/Authentication";
 import React from "react";
-
 import {
   Button,
   Card,
@@ -17,7 +16,7 @@ import {
   Col,
 } from "reactstrap";
 
-const Login = () => {
+const Forgot = () => {
   const [user, setUser] = React.useState({
     email: "",
     password: ""
@@ -48,7 +47,7 @@ const Login = () => {
           
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <h3>Sign In</h3>
+              <h3>Reset Password</h3>
             </div>
 
             {/* Email */}
@@ -71,24 +70,7 @@ const Login = () => {
                 </InputGroup>
               </FormGroup>
 
-              {/* Password */}
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                    value={user.password}
-                    onChange={handleInputChange}
-                    autoComplete="new-password"
-                  />
-                </InputGroup>
-              </FormGroup>
+             
               {/* <div className="custom-control custom-control-alternative custom-checkbox">
                 <input
                   className="custom-control-input"
@@ -116,8 +98,8 @@ const Login = () => {
           <Col xs="6">
             <a
               className="text-light"
-              href="/auth/Forgot"
-              // onClick={(e) => e.preventDefault()}
+              href="/"
+              onClick={(e) => e.preventDefault()}
             >
               <small>Forgot password?</small>
             </a>
@@ -129,4 +111,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgot;
