@@ -6,7 +6,7 @@ import Profile from "views/examples/Profile.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
-import Feed from "views/examples/Feed.js";
+// import Feed from "views/examples/Feed.js";
 
 var routes = [
   {
@@ -25,7 +25,7 @@ var routes = [
   },
   {
     path: "/user-profile",
-    name: "Users",
+    name: "My Profile",
     icon: "ni ni-single-02 text-yellow",
     component: <Profile />,
     layout: "/admin",
@@ -37,13 +37,13 @@ var routes = [
     component: <Tables />,
     layout: "/admin",
   },
-  {
-    path: "/feed",
-    name: "Live Feed",
-    icon: "ni ni-camera-compact text-green",
-    component: <Feed />,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/feed",
+  //   name: "Live Feed",
+  //   icon: "ni ni-camera-compact text-green",
+  //   component: <Feed />,
+  //   layout: "/admin",
+  // },
   {
     path: "/login",
     name: "Login",

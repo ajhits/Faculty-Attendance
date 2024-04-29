@@ -162,18 +162,21 @@ export const removeRoom = (ID) => {
     });
 };
 
-export const updateRoom = async (props) => {
-  return new Promise((resolve,reject)=>{
-    
+
+
+export const updateUserData = async (props) => {
+  return new Promise((resolve, reject) => {
     try {
-
-      update(ref(database, 'Room/' + props.id),props)
-      .then(result=>resolve(result))
-      .catch(error=>reject(error))
-
+      update(ref(database, `Account/${props.UID}`), {
+        "email": props.email,
+        "idNumber": props.idNumber,
+        "name": props.name,
+        "position": props.position
+      })
+      .then(() => resolve("Data updated successfully"))
+      .catch(error => reject(error));
     } catch (err) {
       reject(err);
     }
-  })
-
+  });
 }

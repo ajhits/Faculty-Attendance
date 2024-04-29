@@ -35,11 +35,13 @@ import {
   Col,
 } from "reactstrap";
 import { LogoutSession } from "../../firebase/Auth/Authentication";
+import LogoutModal from "components/Modal/LogoutModal";
 
 // var ps;
 
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
+  const [logout,setLogout] = useState(false);
   // verifies if routeName is the one active (in browser input)
   // const activeRoute = (routeName) => {
   //   return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -54,7 +56,8 @@ const Sidebar = (props) => {
   };
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
-    return routes.map((prop, key) => {
+    console.log(routes)
+    return routes.filter(prop=> prop.layout !== "/auth").map((prop, key) => {
       return (
         <NavItem key={key}>
           <NavLink
@@ -93,6 +96,13 @@ const Sidebar = (props) => {
       expand="md"
       id="sidenav-main"
     >
+
+    <LogoutModal 
+        modal={logout}
+        setModal={setLogout}
+        logout={LogoutSession}
+      />
+
       <Container fluid>
         {/* Toggler */}
         <button
@@ -111,7 +121,7 @@ const Sidebar = (props) => {
 
         {/* User */}
         <Nav className="align-items-center d-md-none">
-          <UncontrolledDropdown nav>
+          {/* <UncontrolledDropdown nav>
             <DropdownToggle nav className="nav-link-icon">
               <i className="ni ni-bell-55" />
             </DropdownToggle>
@@ -125,7 +135,7 @@ const Sidebar = (props) => {
               <DropdownItem divider />
               <DropdownItem>Something else here</DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
           <UncontrolledDropdown nav>
             <DropdownToggle nav>
               <Media className="align-items-center">
@@ -138,7 +148,7 @@ const Sidebar = (props) => {
               </Media>
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
-              <DropdownItem className="noti-title" header tag="div">
+              {/* <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
               <DropdownItem to="/admin/user-profile" tag={Link}>
@@ -157,8 +167,8 @@ const Sidebar = (props) => {
                 <i className="ni ni-support-16" />
                 <span>Support</span>
               </DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) => LogoutSession()}>
+              <DropdownItem divider /> */}
+              <DropdownItem href="#pablo" onClick={(e) => setLogout(true)}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>

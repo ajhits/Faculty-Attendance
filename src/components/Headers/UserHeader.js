@@ -1,5 +1,7 @@
 
-import { Button, Container, Row, Col } from "reactstrap";
+import { 
+  // Button, 
+  Container, Row, Col } from "reactstrap";
 
 const UserHeader = () => {
   return (
@@ -24,13 +26,13 @@ const UserHeader = () => {
               <p className="text-white mt-0 mb-5">
                 This is your profile page.
               </p>
-              <Button
+              {/* <Button
                 color="info"
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
               >
                 Edit profile
-              </Button>
+              </Button> */}
             </Col>
           </Row>
         </Container>

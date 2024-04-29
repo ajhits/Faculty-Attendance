@@ -22,12 +22,18 @@ import { useEffect, useState } from "react";
 import { getEmployee, removeUser } from "../../firebase/Database";
 import { createAccount } from "../../firebase/Auth/Authentication";
 
+// Modal
+import EditModal from "components/Modal/EditModal";
+import RegisterModal from "components/Modal/RegisterModal"; 
+
 
 // REGISTER USERS ======================================================================= //
-
 const Tables = () => {
 
   const [userAccount,setUserAccount] = useState({})
+  const [editModal, setEditModal] = useState(false)
+  const [createModal, setCreateModal] = useState(false)
+  const [data,setData] = useState(null)
 
   useEffect(()=>{
     getEmployee()
@@ -53,6 +59,15 @@ const Tables = () => {
     }).catch(error=>alert(error))
   };
 
+    // Function to handle delete action
+  const handleEdit = (userId) => {
+    
+    
+      setData(userId);
+      setEditModal(!editModal)
+
+    };
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -75,10 +90,15 @@ const Tables = () => {
     return [capitalizedFirstWord, ...restOfWords].join(' ');
   }
 
+
   const handleSubmit =  (e) => {
     e.preventDefault();
 
-    console.log(userAccount.filter(filter=>filter.idNumber === formData.idNumber).length);
+    setCreateModal(true)
+  };
+
+  const handleSubmits =  (e) => {
+    e.preventDefault();
 
     if (userAccount.filter(filter=>filter.idNumber === formData.idNumber).length === 0 ) {
       createAccount({...formData, "name": capitalizeString(formData.name)})
@@ -96,6 +116,19 @@ const Tables = () => {
 
   return (
     <>
+
+      <EditModal 
+        modal={editModal}
+        setModal={setEditModal}
+        data={data}
+      />
+      <RegisterModal 
+        modal={createModal}
+        setModal={setCreateModal}
+        data={formData}
+        handleSubmits={handleSubmits}
+      />
+
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -130,6 +163,7 @@ const Tables = () => {
                       <td>
                         {/* Delete button */}
                         <Button color="danger" onClick={() => handleDelete(data.UID)}>Delete</Button>
+                        <Button color="success" onClick={() => handleEdit(data)}>Edit</Button>
                       </td>
                   </tr>
                   ))}
@@ -155,6 +189,7 @@ const Tables = () => {
                 <h3 className="mb-0">Register New User</h3>
               </CardHeader>
               <CardBody>
+
                 {/* Form for registration */}
                 <Form onSubmit={handleSubmit}>
       <FormGroup>

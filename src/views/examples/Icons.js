@@ -348,7 +348,7 @@ const [filteredData, setFilteredData] = useState([]);
 
   
   const handleSearch = (event) => {
-    const searchTerm = event.target.value.toLowerCase();
+    const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
     if (!searchTerm) {
       setFilteredData(data);
@@ -408,6 +408,7 @@ const [filteredData, setFilteredData] = useState([]);
 
   const handleDownloadExcel = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current);
+
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
     XLSX.writeFile(wb, "table_data.xlsx");

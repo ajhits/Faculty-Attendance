@@ -69,9 +69,9 @@ const Profile = () => {
                   <br></br>
                   <br></br>
                   <p>Admin - everything is centralized.</p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                  {/* <a href="#pablo" onClick={(e) => e.preventDefault()}>
                     Show more
-                  </a>
+                  </a> */}
                 </div>
               </CardBody>
             </Card>
