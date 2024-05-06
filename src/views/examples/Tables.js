@@ -147,6 +147,7 @@ const Tables = () => {
                     <th scope="col">Employee ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Department</th>
                     <th scope="col">Position</th>
                     <th scope="col">Actions</th> {/* Added column for actions */}
                   </tr>
@@ -159,6 +160,7 @@ const Tables = () => {
                       <td>{data.idNumber}</td>
                       <td>{data.name}</td>
                       <td>{data.email}</td>
+                      <td>{data.department}</td>
                       <td>{data.position}</td>
                       <td>
                         {/* Delete button */}
@@ -227,13 +229,28 @@ const Tables = () => {
           onChange={handleChange}
         />
       </FormGroup>
+        
+      <FormGroup>
+        <Label for="department">Department</Label>
+        <Input
+          type="select"
+          name="department"
+          id="department"
+          value={formData.department}
+          onChange={handleChange}
+        >
+          <option value="faculty">CEA</option>
+          <option value="staff">CBEA</option>
+          <option value="employee">CSA</option>
+        </Input>
+      </FormGroup>
 
       <FormGroup>
         <Label for="position">Position</Label>
         <Input
           type="select"
           name="position"
-          id="department"
+          id="position"
           value={formData.department}
           onChange={handleChange}
         >
