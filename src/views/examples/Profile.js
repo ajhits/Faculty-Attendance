@@ -145,7 +145,7 @@ const Profile = () => {
                             className="form-control-alternative"
                             defaultValue="*******"
                             id="input-first-name"
-                            placeholder="First name"
+                            placeholder="Current Password"
                             type="password"
                             name="CurrentPass"
                             value={formData.CurrentPass}
@@ -166,7 +166,7 @@ const Profile = () => {
                             className="form-control-alternative"
                             defaultValue="*******"
                             id="input-last-name"
-                            placeholder="Last name"
+                            placeholder="New Password"
                             type="password"
                                      name="NewPassword"
                             value={formData.NewPassword}
