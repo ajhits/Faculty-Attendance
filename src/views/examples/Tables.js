@@ -72,6 +72,7 @@ const Tables = () => {
     name: '',
     email: '',
     idNumber: '',
+    department: 'CEA',
     position: 'faculty' // default value
   });
 
@@ -239,9 +240,9 @@ const Tables = () => {
           value={formData.department}
           onChange={handleChange}
         >
-          <option value="faculty">CEA</option>
-          <option value="staff">CBEA</option>
-          <option value="employee">CSA</option>
+          <option value="CEA">CEA</option>
+          <option value="CBEA">CBEA</option>
+          <option value="CSA">CSA</option>
         </Input>
       </FormGroup>
 
@@ -251,7 +252,7 @@ const Tables = () => {
           type="select"
           name="position"
           id="position"
-          value={formData.department}
+          value={formData.position}
           onChange={handleChange}
         >
           <option value="faculty">Faculty</option>

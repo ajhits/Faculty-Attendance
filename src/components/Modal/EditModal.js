@@ -89,17 +89,20 @@ function EditModal(props) {
                     />
                 </FormGroup>
 
-                {/* Employee Number */}
+                {/* Department */}
                 <FormGroup>
-                    <Label for="id">Employee Number</Label>
-                    <Input
-                    type="text"
-                    name="idNumber"
-                    id="id"
-                    placeholder="Enter your Employee Number"
-                    value={formData.idNumber}
-                      onChange={handleChange}
-                    />
+                  <Label for="department">Department</Label>
+                  <Input
+                  type="select"
+                  name="department"
+                  id="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                  >
+                    <option value="CEA">CEA</option>
+                    <option value="CBEA">CBEA</option>
+                    <option value="CSA">CSA</option>
+                  </Input>
                 </FormGroup>
 
                 {/* Position */}

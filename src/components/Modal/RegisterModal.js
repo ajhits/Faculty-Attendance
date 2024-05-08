@@ -26,7 +26,8 @@ function RegisterModal(props) {
     name: '',
     email: '',
     idNumber: '',
-    position: '' // default value
+    position: '',
+    department: ''
   
 });
 
@@ -83,6 +84,12 @@ function RegisterModal(props) {
                 {/* Employee Number */}
                 <FormGroup>
                   <Label for="id">Employee ID:  <strong> {props.data && formData.idNumber}</strong></Label>
+                </FormGroup>
+
+                
+                {/* Employee Number */}
+                <FormGroup>
+                  <Label for="id">Department:  <strong> {props.data && formData.department}</strong></Label>
                 </FormGroup>
 
                 {/* Position */}
