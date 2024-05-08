@@ -87,9 +87,10 @@ const Icons = () => {
 
     getHistory()
     .then(data=>{
+
       setData(filterNoMatchData(data).filter(data=>data.name === userDetails.name))
       setFilteredData(filterNoMatchData(data).filter(data=>data.name === userDetails.name))
-      console.log(filterNoMatchData(data).filter(data=>data.name === userDetails.name))
+    
     }).catch(error=>console.log(error))
 
   },[userDetails.name])

@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { LogoutSession } from "../../firebase/Auth/Authentication";
 import { Link } from "react-router-dom";
 // reactstrap components
@@ -7,21 +8,30 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup,
+  // Form,
+  // FormGroup,
+  // InputGroupAddon,
+  // InputGroupText,
+  // Input,
+  // InputGroup,
   Navbar,
   Nav,
   Container,
   Media,
 } from "reactstrap";
+import LogoutModal from "components/Modal/LogoutModal";
 
 const AdminNavbar = (props) => {
+  const [logout,setLogout] = useState(false)
   return (
     <>
+
+<LogoutModal 
+        modal={logout}
+        setModal={setLogout}
+        logout={LogoutSession}
+      />
+
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Container fluid>
           <Link
@@ -61,7 +71,7 @@ const AdminNavbar = (props) => {
                 <DropdownItem href="#pablo" 
                 onClick={(e) => {
                   e.preventDefault();
-                  LogoutSession();
+                  setLogout(true)
                 }}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>

@@ -33,28 +33,36 @@ export const getHistoryToday = async (date) => {
   }
 
   // GET HISTORY
-export const getHistory = async () => {
-  return new Promise((resolve, reject) => {
-    try {
-      
-      const dbRef = ref(database, `History/`);
-      onValue(dbRef, (snapshot) => 
-        {
-    
+  export const getHistory = async () => {
+    return new Promise((resolve, reject) => {
+      try {
+        const dbRef = ref(database, `History/`);
+        onValue(dbRef, (snapshot) => {
           const data = snapshot.val();
   
-
-          resolve(data) 
-        }, (error) => 
-        {
+          // Convert object into an array of key-value pairs
+          const dataArray = Object.entries(data);
+  
+          // Sort the array based on date (in descending order)
+          dataArray.sort(([dateA], [dateB]) => new Date(dateB) - new Date(dateA));
+  
+          // Convert the sorted array back into an object
+          const sortedData = {};
+          dataArray.forEach(([date, value]) => {
+            sortedData[date] = value;
+          });
+  
+          resolve(sortedData);
+        }, (error) => {
           reject(error);
         });
-
-    }catch(error){
-      reject(error);
-    }
-  });
-}
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  
+  
 
 // GET EMPLOYEE
 export const getEmployee = async () => {
