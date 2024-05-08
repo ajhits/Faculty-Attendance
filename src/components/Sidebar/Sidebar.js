@@ -35,10 +35,12 @@ import {
   Col,
 } from "reactstrap";
 import { LogoutSession } from "../../firebase/Auth/Authentication";
+import LogoutModal from "components/Modal/LogoutModal";
 
 // var ps;
 
 const Sidebar = (props) => {
+  const [logout,setLogout] = useState(false)
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
   // const activeRoute = (routeName) => {
@@ -92,6 +94,12 @@ const Sidebar = (props) => {
       expand="md"
       id="sidenav-main"
     >
+
+<LogoutModal 
+        modal={logout}
+        setModal={setLogout}
+        logout={LogoutSession}
+      />
       <Container fluid>
         {/* Toggler */}
         <button
@@ -111,7 +119,7 @@ const Sidebar = (props) => {
 
         {/* User */}
         <Nav className="align-items-center d-md-none">
-          <UncontrolledDropdown nav>
+          {/* <UncontrolledDropdown nav>
             <DropdownToggle nav className="nav-link-icon">
               <i className="ni ni-bell-55" />
             </DropdownToggle>
@@ -125,7 +133,7 @@ const Sidebar = (props) => {
               <DropdownItem divider />
               <DropdownItem>Something else here</DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
           <UncontrolledDropdown nav>
             <DropdownToggle nav>
               <Media className="align-items-center">
@@ -141,17 +149,21 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              {/* <DropdownItem to="/admin/user-profile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
               </DropdownItem>
               <DropdownItem to="/admin/user-profile" tag={Link}>
                 <i className="ni ni-settings-gear-65" />
                 <span>Settings</span>
-              </DropdownItem>
+              </DropdownItem> */}
               
               <DropdownItem divider />
-              <DropdownItem href="#pablo" onClick={(e) =>        LogoutSession()}>
+              <DropdownItem href="#pablo"            
+               onClick={(e) => {
+                  e.preventDefault();
+                  setLogout(true)
+                }}>
                 <i className="ni ni-user-run" />
                 <span>Logout</span>
               </DropdownItem>
