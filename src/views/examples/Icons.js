@@ -306,27 +306,21 @@ const [data,setData] = useState([
 const [filteredData, setFilteredData] = useState([]);
 
   const filterNoMatchData = (dummyData) => {
-    const filteredData = Object.entries(dummyData).reduce((acc, [date, data]) => {
-        const filtered = Object.keys(data).reduce((obj, key) => {
-            if (key !== "No match detected") {
-                obj[key] = data[key];
-            }
-            return obj;
-        }, {});
-        acc[date] = filtered;
-        return acc;
-    }, {});
 
     const transformedData = [];
 
-    for (const [date, devices] of Object.entries(filteredData)) {
-        for (const [deviceName, deviceData] of Object.entries(devices)) {
-            const { "Time In": timeIn, "Time Out": timeOut, temp } = deviceData;
+    for (const [date, devices] of Object.entries(dummyData)) {
+
+
+        for (const [key, deviceData] of Object.entries(devices)) {
+
+            const { data,name,temp,time } = deviceData;
             transformedData.push({
-                name: deviceName,
+                key: key,
+                name: name,
                 temperature: temp || "N/A",
-                timeIn: timeIn || "N/A",
-                timeOut: timeOut || "N/A",
+                status: data || "N/A",
+                time: time || "N/A",
                 date: date,
             });
         }
@@ -451,8 +445,8 @@ const [filteredData, setFilteredData] = useState([]);
                       <tr>
                         <th>Name</th>
                         <th>Temperature (°C)</th>
-                        <th>Time In</th>
-                        <th>Time Out</th>
+                        <th>Status</th>
+                        <th>Time</th>
                         <th>Date</th>
                       </tr>
                     </thead>
@@ -461,8 +455,8 @@ const [filteredData, setFilteredData] = useState([]);
                         <tr key={index}>
                           <td>{device.name}</td>
                           <td>{device.temperature}</td>
-                          <td>{device.timeIn}</td>
-                          <td>{device.timeOut}</td>
+                          <td>{device.status}</td>
+                          <td>{device.time}</td>
                           <td>{device.date}</td>
                         </tr>
                       ))}
