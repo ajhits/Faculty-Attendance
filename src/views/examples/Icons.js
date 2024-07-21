@@ -123,9 +123,42 @@ const Icons = () => {
   const handleSort = (option) => {
     setSortOption(option);
     let sorted = [...filteredData];
+    const currentDate = new Date(); // Get current date
+  
     switch (option) {
       case "daily":
-        sorted.sort((a, b) => (a.date > b.date ? 1 : -1));
+        // Filter by current date
+        sorted = sorted.filter(item => {
+          const itemDate = new Date(item.date);
+          return itemDate.getDate() === currentDate.getDate() &&
+                 itemDate.getMonth() === currentDate.getMonth() &&
+                 itemDate.getFullYear() === currentDate.getFullYear();
+        });
+        break;
+      case "weekly":
+        // Filter by current week
+        const currentWeekNumber = getWeekNumber(currentDate);
+        sorted = sorted.filter(item => {
+          const itemWeekNumber = getWeekNumber(new Date(item.date));
+          return itemWeekNumber === currentWeekNumber;
+        });
+        break;
+      case "monthly":
+        // Filter by current month
+        const currentMonth = currentDate.getMonth();
+        sorted = sorted.filter(item => {
+          const itemMonth = new Date(item.date).getMonth();
+          return itemMonth === currentMonth;
+        });
+        break;
+      default:
+        break;
+    }
+    
+    // After filtering, sort the filtered data
+    switch (option) {
+      case "daily":
+        sorted.sort((a, b) => (new Date(a.date) > new Date(b.date) ? 1 : -1));
         break;
       case "weekly":
         sorted.sort((a, b) => {
@@ -136,16 +169,18 @@ const Icons = () => {
         break;
       case "monthly":
         sorted.sort((a, b) => {
-          const monthA = new Date(a.date).getMonth();
-          const monthB = new Date(b.date).getMonth();
+          const monthA = new Date(a.date).getDate();
+          const monthB = new Date(b.date).getDate();
           return monthA - monthB;
         });
         break;
       default:
         break;
     }
+  
     setFilteredData(sorted);
   };
+  
 
   const getWeekNumber = (dateString) => {
     const date = new Date(dateString);
@@ -190,6 +225,7 @@ const Icons = () => {
                     <option value="daily">Sort by Daily</option>
                     <option value="weekly">Sort by Weekly</option>
                     <option value="monthly">Sort by Monthly</option>
+                    <option value="all">clear</option>
                   </select>
                 </div>
       
