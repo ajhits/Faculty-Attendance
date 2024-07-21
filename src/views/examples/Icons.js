@@ -352,16 +352,22 @@ const [filteredData, setFilteredData] = useState([]);
   };
 
   const filterData = (term) => {
+
+
     const filtered = data.filter((device) => {
+
+
+
       const nameMatch = device.name.toLowerCase().includes(term);
       const dateMatch = device.date.includes(term);
-      const timeInMatch = device.timeIn.includes(term);
-      const timeOutMatch = device.timeOut.includes(term);
-      const temperatureMatch = device.temperature.toString().includes(term);
+      const status = device.status.toLowerCase().includes(term);
+      const temperatureMatch = device.temperature.toString().toLowerCase().includes(term);
       return (
-        nameMatch || dateMatch || timeInMatch || timeOutMatch || temperatureMatch
+        nameMatch || dateMatch || status || temperatureMatch
       );
     });
+
+
     setFilteredData(filtered);
   };
 
