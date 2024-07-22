@@ -50,27 +50,21 @@ const Icons = () => {
   const tableRef = useRef(null);
 
   const filterNoMatchData = (dummyData) => {
-    const filteredData = Object.entries(dummyData).reduce((acc, [date, data]) => {
-        const filtered = Object.keys(data).reduce((obj, key) => {
-            if (key !== "No match detected") {
-                obj[key] = data[key];
-            }
-            return obj;
-        }, {});
-        acc[date] = filtered;
-        return acc;
-    }, {});
 
     const transformedData = [];
 
-    for (const [date, devices] of Object.entries(filteredData)) {
-        for (const [deviceName, deviceData] of Object.entries(devices)) {
-            const { "Time In": timeIn, "Time Out": timeOut, temp } = deviceData;
+    for (const [date, devices] of Object.entries(dummyData)) {
+
+
+        for (const [key, deviceData] of Object.entries(devices)) {
+
+            const { data,name,temp,time } = deviceData;
             transformedData.push({
-                name: deviceName,
+                key: key,
+                name: name,
                 temperature: temp || "N/A",
-                timeIn: timeIn || "N/A",
-                timeOut: timeOut || "N/A",
+                status: data || "N/A",
+                time: time || "N/A",
                 date: date,
             });
         }
@@ -107,22 +101,23 @@ const Icons = () => {
   };
 
   const filterData = (term) => {
+
     const filtered = data.filter((device) => {
       const nameMatch = device.name.toLowerCase().includes(term);
       const dateMatch = device.date.includes(term);
-      const timeInMatch = device.timeIn.includes(term);
-      const timeOutMatch = device.timeOut.includes(term);
-      const temperatureMatch = device.temperature.toString().includes(term);
+      const status = device.status.toLowerCase().includes(term);
+      const temperatureMatch = device.temperature.toString().toLowerCase().includes(term);
       return (
-        nameMatch || dateMatch || timeInMatch || timeOutMatch || temperatureMatch
+        nameMatch || dateMatch || status || temperatureMatch
       );
     });
+
     setFilteredData(filtered);
   };
 
   const handleSort = (option) => {
     setSortOption(option);
-    let sorted = [...filteredData];
+    let sorted = [...data];
     const currentDate = new Date(); // Get current date
   
     switch (option) {
@@ -151,6 +146,7 @@ const Icons = () => {
           return itemMonth === currentMonth;
         });
         break;
+
       default:
         break;
     }
@@ -173,6 +169,9 @@ const Icons = () => {
           const monthB = new Date(b.date).getDate();
           return monthA - monthB;
         });
+        break;
+        case "all":
+          sorted = data
         break;
       default:
         break;
@@ -233,18 +232,20 @@ const Icons = () => {
                   <table ref={tableRef} className="table">
                     <thead>
                       <tr>
+                      <th>Name</th>
                         <th>Temperature (°C)</th>
-                        <th>Time In</th>
-                        <th>Time Out</th>
+                        <th>Status</th>
+                        <th>Time</th>
                         <th>Date</th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredData.map((device, index) => (
                         <tr key={index}>
+                        <td>{device.name}</td>
                           <td>{device.temperature}</td>
-                          <td>{device.timeIn}</td>
-                          <td>{device.timeOut}</td>
+                          <td>{device.status}</td>
+                          <td>{device.time}</td>
                           <td>{device.date}</td>
                         </tr>
                       ))}
