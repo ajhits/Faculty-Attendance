@@ -373,7 +373,7 @@ const [filteredData, setFilteredData] = useState([]);
 
   const handleSort = (option) => {
     setSortOption(option);
-    let sorted = [...filteredData];
+    let sorted = [...data];
     const currentDate = new Date(); // Get current date
   
     switch (option) {
