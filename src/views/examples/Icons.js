@@ -50,29 +50,50 @@ const Icons = () => {
   const tableRef = useRef(null);
 
   const filterNoMatchData = (dummyData) => {
-
     const transformedData = [];
-
+  
+    // Transforming the data
     for (const [date, devices] of Object.entries(dummyData)) {
-
-
         for (const [key, deviceData] of Object.entries(devices)) {
-
-            const { data,name,temp,time } = deviceData;
+            const { data, name, temp, time } = deviceData;
             transformedData.push({
                 key: key,
                 name: name,
                 temperature: temp || "N/A",
                 status: data || "N/A",
                 time: time || "N/A",
-                date: date,
+                date: new Date(date), // Convert date string to Date object
             });
         }
     }
-
-    return transformedData;
+  
+    // Example filtering: Filter out entries with 'N/A' in time field
+    const filteredData = transformedData.filter(item => item.time !== "N/A");
+  
+    // Example sorting: Sort by date (descending) and time (descending)
+    filteredData.sort((a, b) => {
+        // Compare dates (descending order)
+        if (a.date > b.date) return -1;
+        if (a.date < b.date) return 1;
+  
+        // If dates are the same, compare times (descending order)
+        if (a.time > b.time) return -1;
+        if (a.time < b.time) return 1;
+  
+        return 0;
+    });
+  
+    return filteredData.map(item => ({
+        ...item,
+        // Format date as "Month Day, Year" (e.g., "July 22, 2024")
+        date: item.date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
+    }));
   };
-
+  
   React.useEffect(()=>{
 
     if (userDetails.name === null){
