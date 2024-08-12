@@ -109,6 +109,7 @@ const Profile = () => {
                             id="input-username"
                             placeholder="Username"
                             type="text"
+                            disabled
                           />
                         </FormGroup>
                       </Col>
@@ -126,6 +127,7 @@ const Profile = () => {
                             defaultValue={userDetails.email}
                             placeholder="jesse@example.com"
                             type="email"
+                            disabled
                           />
                         </FormGroup>
                       </Col>

@@ -27,14 +27,14 @@ const Header = () => {
     users.forEach(user => {
       const entries = data[user];
 
-      Object.keys(entries).forEach(entry => {
+      Object.values(entries).forEach(entry => {
 
         // I get undefined on this
         if (entry === 'Time In'){
           totalInCount += 1;
         }
 
-        if (entry === 'Time In'){
+        if (entry === 'Time Out'){
           totalOutCount += 1;
         }
 

@@ -15,7 +15,7 @@ import useAuth from "./firebase/Auth/StatusLogin";
 const Index = () =>{
 
   const { user,data,userDetails} = useAuth();
-  console.log(userDetails)
+
   return(
   <BrowserRouter>
       {user === "login" && <Login  /> }
