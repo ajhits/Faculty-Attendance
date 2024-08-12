@@ -324,19 +324,24 @@ const filterNoMatchData = (dummyData) => {
   }
 
   // Example filtering: Filter out entries with 'N/A' in time field
-  const filteredData = transformedData.filter(item => item.time !== "N/A");
+  const filteredData = transformedData.filter(item => String(item.name) !== "No match detected");
 
   // Example sorting: Sort by date (descending) and time (descending)
   filteredData.sort((a, b) => {
-      // Compare dates (descending order)
-      if (a.date > b.date) return -1;
-      if (a.date < b.date) return 1;
 
-      // If dates are the same, compare times (descending order)
-      if (a.time > b.time) return -1;
-      if (a.time < b.time) return 1;
 
-      return 0;
+
+      let aDates = convertDate(a.date);
+      let aTime = convertTime(a.time);
+      let aDate = `${aDates}T${aTime}`;
+  
+      let isoDate = convertDate(b.date);
+      let isoTime = convertTime(b.time);
+      let bDate = `${isoDate}T${isoTime}`;
+  
+  
+      return new Date(bDate) - new Date(aDate)
+
   });
 
   return filteredData.map(item => ({
@@ -349,7 +354,6 @@ const filterNoMatchData = (dummyData) => {
       })
   }));
 };
-
 
 
   React.useEffect(()=>{
@@ -393,12 +397,39 @@ const filterNoMatchData = (dummyData) => {
     setFilteredData(filtered);
   };
 
+
+
+// Helper function to convert date to ISO format
+function convertDate(dateStr) {
+  const dateParts = new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/');
+  const [month, day, year] = dateParts;
+  return `${year}-${month}-${day}`;
+}
+
+// Helper function to convert 12-hour time format to 24-hour format
+function convertTime(timeStr) {
+  const [time, modifier] = timeStr.split(' ');
+  let [hours, minutes] = time.split(':');
+  
+  // Convert hours and minutes to strings if they aren't already
+  hours = String(hours);
+  minutes = String(minutes);
+
+  if (modifier === 'PM' && hours !== '12') hours = String(parseInt(hours, 10) + 12);
+  if (modifier === 'AM' && hours === '12') hours = '00';
+  
+  // Ensure hours and minutes are two digits
+  return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+}
+
+
   const handleSort = (option) => {
     setSortOption(option);
     let sorted = [...data];
     const currentDate = new Date(); // Get current date
   
     switch (option) {
+
       case "daily":
         // Filter by current date
         sorted = sorted.filter(item => {
@@ -408,6 +439,7 @@ const filterNoMatchData = (dummyData) => {
                  itemDate.getFullYear() === currentDate.getFullYear();
         });
         break;
+
       case "weekly":
         // Filter by current week
         const currentWeekNumber = getWeekNumber(currentDate);
@@ -416,6 +448,7 @@ const filterNoMatchData = (dummyData) => {
           return itemWeekNumber === currentWeekNumber;
         });
         break;
+
       case "monthly":
         // Filter by current month
         const currentMonth = currentDate.getMonth();
@@ -429,32 +462,21 @@ const filterNoMatchData = (dummyData) => {
         break;
     }
     
-    // After filtering, sort the filtered data
-    switch (option) {
-      case "daily":
-        sorted.sort((a, b) => (new Date(a.date) > new Date(b.date) ? 1 : -1));
-        break;
-      case "weekly":
-        sorted.sort((a, b) => {
-          const weekA = getWeekNumber(a.date);
-          const weekB = getWeekNumber(b.date);
-          return weekA - weekB;
-        });
-        break;
-      case "monthly":
-        sorted.sort((a, b) => {
-          const monthA = new Date(a.date).getDate();
-          const monthB = new Date(b.date).getDate();
-          return monthA - monthB;
-        });
-        break;
-        case "all":
-          sorted = data
-        break;
-      default:
-        break;
-    }
-  
+
+
+   // After filtering, sort the filtered data by most recent date and time
+   sorted.sort((a, b) => {
+    let aDates = convertDate(a.date);
+    let aTime = convertTime(a.time);
+    let aDate = `${aDates}T${aTime}`;
+
+    let isoDate = convertDate(b.date);
+    let isoTime = convertTime(b.time);
+    let bDate = `${isoDate}T${isoTime}`;
+
+
+    return new Date(bDate) - new Date(aDate)
+   });
     setFilteredData(sorted);
   };
   

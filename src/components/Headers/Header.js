@@ -10,6 +10,8 @@ const Header = () => {
     TimeIn: 0,
     TimeOut: 0
   })
+
+  
   const getFormattedDate = () => {
     const today = new Date();
     const options = { month: 'long', day: '2-digit', year: 'numeric' };
@@ -27,15 +29,19 @@ const Header = () => {
     users.forEach(user => {
       const entries = data[user];
 
-   
-      Object.keys(entries).forEach(entry => {
+
+      Object.values(entries).forEach(entry => {
+
+
+
 
         // I get undefined on this
         if (entry === 'Time In'){
           totalInCount += 1;
+
         }
 
-        if (entry === 'Time In'){
+        if (entry === 'Time Out'){
           totalOutCount += 1;
         }
 
@@ -50,11 +56,11 @@ const Header = () => {
   
   React.useEffect(()=>{
 
-    console.log("hello Friend")
+
     getHistoryToday(String(getFormattedDate()).replace(",",""))
     .then(data=>{
       setTotal(calculateGrandTotal(data));
-      console.log(data);
+      console.log(calculateGrandTotal(data))
     }).catch(error=>console.log(error))
   },[])
 
