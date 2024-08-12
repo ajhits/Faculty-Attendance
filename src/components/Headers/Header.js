@@ -50,9 +50,11 @@ const Header = () => {
   
   React.useEffect(()=>{
 
+    console.log("hello Friend")
     getHistoryToday(String(getFormattedDate()).replace(",",""))
     .then(data=>{
-      setTotal(calculateGrandTotal(data))
+      setTotal(calculateGrandTotal(data));
+      console.log(data);
     }).catch(error=>console.log(error))
   },[])
 
