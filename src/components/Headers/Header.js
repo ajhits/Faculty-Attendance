@@ -4,7 +4,7 @@ import { getHistoryToday } from "../../firebase/Database";
 import React, { useState } from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
-const Header = () => {
+const Header = ({ name }) => {
 
   const [total,setTotal] = useState({
     TimeIn: 0,
@@ -18,7 +18,7 @@ const Header = () => {
 
   function calculateGrandTotal(data) {
     const users = Object.keys(data).filter(key => key !== "No match detected");
-
+    console.log()
 
   
     let totalInCount = 0;
@@ -51,9 +51,9 @@ const Header = () => {
 
     getHistoryToday(String(getFormattedDate()).replace(",",""))
     .then(data=>{
-      setTotal(calculateGrandTotal(data))
+      setTotal(calculateGrandTotal(Object.values(data).filter(data=>data.name === name)))
     }).catch(error=>console.log(error))
-  },[])
+  },[name])
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
