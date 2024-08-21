@@ -15,6 +15,7 @@ import {
   Table,
   Container,
   Row,
+  FormFeedback,
 } from "reactstrap";
 
 import Header from "components/Headers/Header.js";
@@ -26,6 +27,9 @@ import { createAccount } from "../../firebase/Auth/Authentication";
 import EditModal from "components/Modal/EditModal";
 import RegisterModal from "components/Modal/RegisterModal"; 
 
+// validation on email
+import { Register_Validation } from "Validation";
+
 
 // REGISTER USERS ======================================================================= //
 const Tables = () => {
@@ -35,7 +39,17 @@ const Tables = () => {
   const [createModal, setCreateModal] = useState(false)
   const [data,setData] = useState(null)
 
-  useEffect(()=>{
+  const [error, setError] = useState({
+    name: false,
+    nameError: "",
+    email: false,
+    emailError: "",
+    employee: false,
+    employeeError: ""
+  })
+
+
+  useEffect(()=>{ 
     getEmployee()
     .then(data=>{
 
@@ -78,6 +92,8 @@ const Tables = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+   
     setFormData((prevData) => ({
       ...prevData,
       [name]: value
@@ -92,10 +108,51 @@ const Tables = () => {
   }
 
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = async  (e) => {
     e.preventDefault();
 
-    setCreateModal(true)
+
+    try {
+      await Register_Validation.validate({ email: formData.email, name: formData.name, employee: formData.idNumber}, { abortEarly: false });
+      
+      setError({
+        name: false,
+        nameError: "",
+
+        email: false,
+        emailError: "",
+
+        employee: false,
+        employeeError: ""
+      });
+     
+      setCreateModal(true)
+
+    } catch (validationError) {
+
+      // Extract specific error messages for email and password
+      const nameError = validationError.inner.find((error) => error.path === 'name');
+      const emailError = validationError.inner.find((error) => error.path === 'email');
+      const employeeError = validationError.inner.find((error) => error.path === 'employee');
+
+      
+      // If validation errors occur
+      setError({
+        name: !!nameError,
+        nameError: nameError && nameError.message,
+
+        email: !!emailError,
+        emailError: emailError && emailError.message,
+
+        employee: !!employeeError,
+        employeeError: employeeError && employeeError.message
+      });
+
+    }
+
+
+
+
   };
 
   const handleSubmits =  (e) => {
@@ -195,6 +252,7 @@ const Tables = () => {
 
                 {/* Form for registration */}
                 <Form onSubmit={handleSubmit}>
+
       <FormGroup>
         <Label for="name">Name</Label>
         <Input
@@ -204,7 +262,13 @@ const Tables = () => {
           placeholder="Enter name"
           value={formData.name}
           onChange={handleChange}
+          invalid={error.name}
         />
+
+          <FormFeedback>
+            {error.nameError}
+          </FormFeedback>
+
       </FormGroup>
 
       <FormGroup>
@@ -216,7 +280,12 @@ const Tables = () => {
           placeholder="Enter email"
           value={formData.email}
           onChange={handleChange}
+          invalid={error.email}
         />
+
+          <FormFeedback>
+            {error.emailError}
+          </FormFeedback>
       </FormGroup>
 
       <FormGroup>
@@ -224,11 +293,16 @@ const Tables = () => {
         <Input
           type="text"
           name="idNumber"
-          id="id"
+          id="idNumber"
           placeholder="Enter your Employee Number"
-          value={formData.id}
+          value={formData.idNumber}
           onChange={handleChange}
+          invalid={error.employee}
         />
+
+          <FormFeedback>
+            {error.employeeError}
+          </FormFeedback>
       </FormGroup>
         
       <FormGroup>
