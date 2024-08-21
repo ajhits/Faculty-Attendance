@@ -3,6 +3,7 @@ import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Login from "views/examples/Login.js";
 import Icons from "views/examples/Icons.js";
+import Forgot from "views/examples/Forgots";
 
 var routes = [
   {
@@ -35,6 +36,14 @@ var routes = [
     component: <Login />,
     layout: "/auth",
   }
+  ,
+  {
+    path: "/Forgot",
+    name: "Register",
+    icon: "ni ni-circle-08 text-pink",
+    component: <Forgot />,
+    layout: "/auth",
+  },
 
 ];
 export default routes;

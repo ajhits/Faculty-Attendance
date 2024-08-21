@@ -1,5 +1,5 @@
 
-import { LoginSession } from "../../firebase/Auth/Authentication";
+import { ForgotPasswords } from "../../firebase/Auth/Authentication";
 import React from "react";
 import {
   Button,
@@ -16,7 +16,7 @@ import {
   Col,
 } from "reactstrap";
 
-const Login = () => {
+const Forgot = () => {
   const [user, setUser] = React.useState({
     email: "",
     password: ""
@@ -35,9 +35,9 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
 
-    LoginSession(user)
-    .then(e=>console.log("goodshist"))
-    .catch(e=> alert(e))
+    ForgotPasswords(user.email)
+    .then(e=>alert(e.message))
+    .catch(e=> alert(e.message))
 };
 
   return (
@@ -47,7 +47,7 @@ const Login = () => {
           
           <CardBody className="px-lg-5 py-lg-5">
             <div className="text-center text-muted mb-4">
-              <h3>Sign In</h3>
+              <h3>Reset Password</h3>
             </div>
 
             {/* Email */}
@@ -70,42 +70,10 @@ const Login = () => {
                 </InputGroup>
               </FormGroup>
 
-              {/* Password */}
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    placeholder="Password"
-                    name="password"
-                    type="password"
-                    value={user.password}
-                    onChange={handleInputChange}
-                    autoComplete="new-password"
-                  />
-                </InputGroup>
-              </FormGroup>
-              {/* <div className="custom-control custom-control-alternative custom-checkbox">
-                <input
-                  className="custom-control-input"
-                  id=" customCheckLogin"
-                  type="checkbox"
-                />
-                <label
-                  className="custom-control-label"
-                  htmlFor=" customCheckLogin"
-                >
-                  <span className="text-muted">Remember me</span>
-                </label>
-              </div> */}
-
               {/* Login */}
               <div className="text-center">
                 <Button className="my-4" color="primary" type="button" onClick={handleLogin}>
-                  Sign in
+                  send email
                 </Button>
               </div>
             </Form>
@@ -115,9 +83,9 @@ const Login = () => {
           <Col xs="6">
             <a
               className="text-light"
-              href="/auth/Forgot"
+              href="/"
             >
-              <small>Forgot password?</small>
+              <small>Back to Login</small>
             </a>
           </Col>
           
@@ -127,4 +95,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgot;
