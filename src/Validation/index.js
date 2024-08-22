@@ -14,7 +14,6 @@ export const Register_Validation = yup.object().shape({
         .required("Please fill out the email field"),
 
     employee : yup.string()
-        .matches(/^[0-9-]*$/, "Only numbers and dashes are allowed")
         .required("Please enter your employee number"),
 })
     
